@@ -1,27 +1,59 @@
 html {
+    margin: 0;
+    padding: 0;
     background-image: url(images/flower.jpg);
 }
+body {
+    width: 450px;
+    height: 335px;
+    font-size: 12px;
+    font-family: "Arial", sans-serif;
+    color: white;
+  } 
 header {
     display: block;
-    width: 200px;
-    height: 30px;
-    color: white;
+    width: 300px;
+    height: 40px;
+    padding-top: 10px;
     text-align: center;
-    font-size: 12px;
+    font-size: 28px;
     background-color: rgb(116, 59, 111);
-    margin-left: 200px;
-    margin-top: 10px;
+    margin-left: 150px;
     border-radius: 20px; 
-    background-image: url(images/trophy.png);
-    background-repeat: no-repeat;
-    background-size: 12%;
-    background-position-x: 20%;
    }    
-.square {
+.trophy_img {
+width: 30px;
+height: 30px;
+}
+.Player1, .Player2, .Players_Menu
+{
+    color:  rgb(116, 59, 111);  
+}
+.Players_Menu {
+    text-align: center;
+    width: 450px;
+    height: 200px;
+    margin-left: 90px;
+}
+.Player1 {
+    display: block;
+    float: left;
+    width: 200px;
+    height: 100px;
+ }
+.Player2 {
+    display: block;
+    float: right;
+    width: 200px;
+    height: 100px;
+        }
+.zero_img {
+}     
+  .square {
     margin-left: 100px;
     width: 400px;
     height: 400px;
-    transform: skewY(<15>);
+    transform: skewY(<15>);  
     }
 .color1 {
     background-color: rgb(247, 220, 220);
@@ -36,15 +68,11 @@ header {
     border-radius: 10px;
 }
 footer {
-    margin-top: 20px;
-    margin-left: 100px;
     width: 410px;
-    height: 50px;
+    height: 20px;
     color: white;
     background-color: rgb(116, 59, 111);
-    }
-.comment{
-    display: block;
+    margin-left: 100px;
     border-radius: 10px;
-
-}
+    margin-top: 30px;
+    }
