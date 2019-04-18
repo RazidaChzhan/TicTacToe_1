@@ -17,10 +17,16 @@ var winCombinations = [
 var stepCount = 0;
 var dataX = [], 
     dataO = [];
-    
+
+var isWin = false; 
 
 for (var i = 0; i < button.length; i++) {
   button[i].addEventListener("click", myFunction);
+  if (isWin === true) {
+    alert ("Игра окончена, предлагаем начать игру заново.");
+    resetDefault ();
+  }
+
 }
 
 function myFunction() {
@@ -29,7 +35,8 @@ function myFunction() {
       currentPlayer = 'Дарья';
       message.innerText = "Ваш ход, " +  currentPlayer;
     if (stepCount === 15) {
-        message.innerText = "Предлагаем начать игру заново, ничья";
+        message.innerText = "Ничья, предлагаем начать игру заново";
+        resetDefault();
     } else {
       stepCount ++;
     }
@@ -49,6 +56,7 @@ function myFunction() {
         console.log ('checkWin: ' + checkWin(dataX, num));
         if (checkWin(dataX, num)){
           message.innerText = "Ура! Полина победила!";
+          isWin = true;
         }
       }
     }
@@ -58,7 +66,8 @@ function myFunction() {
     currentPlayer = 'Полина';
     message.innerText = "Ваш ход,  " + currentPlayer;
     if (stepCount === 15) {
-      message.innerText = "Предлагаем начать игру заново, ничья";
+      message.innerText = "Ничья, предлагаем начать игру заново";
+      resetDefault ();
     } else {
       stepCount ++;
     }
@@ -74,8 +83,8 @@ function myFunction() {
       if (dataO.length > 3){
         // console.log ('checkWin: ' + checkWin(dataO, num));
         if (checkWin(dataO, num)){
-          message.innerText = "Ура! Дарья победила!";
-
+          message.innerText = "Ура! Дарья победила!"; 
+          isWin = true;
         } 
       }
     }
@@ -101,8 +110,13 @@ function checkWin(arr, number) {
 }
 
 function resetDefault(){
+  z = 0;
   dataX = []; 
   dataO = [];
   values = [];
-
+  currentPlayer = 'Полина';
+  for (var i = 0; i < button.length; i++) {
+    button[i].style.backgroundImage = "url()";
+  }
+  console.log ('dataX ' + dataX);
 }
