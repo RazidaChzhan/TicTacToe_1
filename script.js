@@ -1,4 +1,5 @@
 var button = document.querySelectorAll("button");
+var restart = document.getElementById('restart');
 var z = 0; //0 - cross 1 - zero
 var values = [];
 var currentPlayer = 'Полина';
@@ -14,20 +15,17 @@ var winCombinations = [
 [0, 5, 10, 15],
 [3, 6, 9, 12]
 ];
-var stepCount = 0;
+var stepCount = 0,
+    isWin = false;
 var dataX = [], 
     dataO = [];
 
-var isWin = false; 
-
 for (var i = 0; i < button.length; i++) {
-  button[i].addEventListener("click", myFunction);
-  if (isWin === true) {
-    alert ("Игра окончена, предлагаем начать игру заново.");
-    resetDefault ();
+     
+     if (!isWin) { 
+      button[i].addEventListener("click", myFunction);
+       }
   }
-
-}
 
 function myFunction() {
   var num = +this.getAttribute("btn-num");
@@ -36,7 +34,7 @@ function myFunction() {
       message.innerText = "Ваш ход, " +  currentPlayer;
     if (stepCount === 15) {
         message.innerText = "Ничья, предлагаем начать игру заново";
-        resetDefault();
+       
     } else {
       stepCount ++;
     }
@@ -55,8 +53,10 @@ function myFunction() {
       if (dataX.length > 3){
         console.log ('checkWin: ' + checkWin(dataX, num));
         if (checkWin(dataX, num)){
-          message.innerText = "Ура! Полина победила!";
           isWin = true;
+          message.innerText = "Ура! Полина победила!";
+          
+          restart.addEventListener("click", resetDefault);
         }
       }
     }
@@ -67,8 +67,7 @@ function myFunction() {
     message.innerText = "Ваш ход,  " + currentPlayer;
     if (stepCount === 15) {
       message.innerText = "Ничья, предлагаем начать игру заново";
-      resetDefault ();
-    } else {
+     } else {
       stepCount ++;
     }
     if (values [num] === 1 || values[num] === 0) {
@@ -83,8 +82,9 @@ function myFunction() {
       if (dataO.length > 3){
         // console.log ('checkWin: ' + checkWin(dataO, num));
         if (checkWin(dataO, num)){
-          message.innerText = "Ура! Дарья победила!"; 
+          message.innerText = "Ура! Дарья победила!";
           isWin = true;
+          restart.addEventListener("click", resetDefault);          
         } 
       }
     }
@@ -115,6 +115,8 @@ function resetDefault(){
   dataO = [];
   values = [];
   currentPlayer = 'Полина';
+  isWin = false;
+  alert ('Игра закончилась, предлагаем начать игру заново.')
   for (var i = 0; i < button.length; i++) {
     button[i].style.backgroundImage = "url()";
   }
