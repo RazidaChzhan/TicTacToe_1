@@ -21,14 +21,17 @@ var dataX = [],
     dataO = [];
 
 for (var i = 0; i < button.length; i++) {
-     
-     if (!isWin) { 
-      button[i].addEventListener("click", myFunction);
-       }
+    button[i].addEventListener("click", myFunction);
   }
 
 function myFunction() {
   var num = +this.getAttribute("btn-num");
+  if (isWin === true) {
+    alert ('Игра закончилась, предлагаем начать игру заново.')
+    return;
+   
+  }
+
   if (z === 0) {
       currentPlayer = 'Дарья';
       message.innerText = "Ваш ход, " +  currentPlayer;
@@ -47,15 +50,12 @@ function myFunction() {
       z = 1;
       values [num] = z;  
       dataX.push(num);
-
-      console.log ('dataX ' + dataX);
       
       if (dataX.length > 3){
         console.log ('checkWin: ' + checkWin(dataX, num));
         if (checkWin(dataX, num)){
           isWin = true;
           message.innerText = "Ура! Полина победила!";
-          
           restart.addEventListener("click", resetDefault);
         }
       }
@@ -78,10 +78,8 @@ function myFunction() {
       z = 0;
       values [num] = z;  
       dataO.push(num);
-      // console.log ('dataO ' + dataO);
       if (dataO.length > 3){
-        // console.log ('checkWin: ' + checkWin(dataO, num));
-        if (checkWin(dataO, num)){
+          if (checkWin(dataO, num)){
           message.innerText = "Ура! Дарья победила!";
           isWin = true;
           restart.addEventListener("click", resetDefault);          
@@ -116,7 +114,7 @@ function resetDefault(){
   values = [];
   currentPlayer = 'Полина';
   isWin = false;
-  alert ('Игра закончилась, предлагаем начать игру заново.')
+  
   for (var i = 0; i < button.length; i++) {
     button[i].style.backgroundImage = "url()";
   }

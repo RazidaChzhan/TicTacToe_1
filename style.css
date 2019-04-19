@@ -15,8 +15,9 @@ header {
     width: 300px;
     height: 35px;
     padding-top: 5px;
+    padding-bottom: 10px;
     text-align: center;
-    font-size: 28px;
+    font-size: 24px;
     background-color: rgb(116, 59, 111);
     margin-left: 150px;
     border-radius: 20px; 
