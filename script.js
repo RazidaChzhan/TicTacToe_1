@@ -1,5 +1,7 @@
 var button = document.querySelectorAll("button");
 var restart = document.getElementById('restart');
+var round = document.getElementById('round');
+var level = 1;
 var z = 0; //0 - cross 1 - zero
 var values = [];
 var currentPlayer = 'Полина';
@@ -23,9 +25,10 @@ var dataX = [],
 for (var i = 0; i < button.length; i++) {
     button[i].addEventListener("click", myFunction);
   }
-
+  round.innerText = 'Уровень ' + level++;
 function myFunction() {
   var num = +this.getAttribute("btn-num");
+  
   if (isWin === true) {
     alert ('Игра закончилась, предлагаем начать игру заново.')
     return;
@@ -108,7 +111,17 @@ function checkWin(arr, number) {
 }
 
 function resetDefault(){
-  z = 0;
+  if (currentPlayer === 'Полина') {
+    z = 0;
+    message.innerText = "Ваш ход,  " + currentPlayer;
+   } else {
+    z = 1;
+    message.innerText = "Ваш ход,  " + currentPlayer;
+  }
+  if (isWin === true) {
+    round.innerText = 'Уровень ' + level++;
+  }
+  
   dataX = []; 
   dataO = [];
   values = [];
