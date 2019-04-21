@@ -33,6 +33,7 @@ scoreO.innerText = countScoreO;
 for (var i = 0; i < button.length; i++) {
     button[i].addEventListener("click", myFunction);
 }
+restart.addEventListener("click", resetDefault);   
 
 function myFunction() {
   var num = +this.getAttribute("btn-num");
@@ -47,8 +48,7 @@ function myFunction() {
       message.innerText = "Ваш ход, " +  currentPlayer;
     if (stepCount === 15) {
         message.innerText = "Ничья, предлагаем начать игру заново";
-        restart.addEventListener("click", resetDefault);       
-    } else {
+      } else {
       stepCount ++;
     }
 
@@ -67,8 +67,7 @@ function myFunction() {
           message.innerText = "Ура! Полина победила!";
           countScoreX++;
           scoreX.innerText = countScoreX;
-          restart.addEventListener("click", resetDefault);
-        }          
+         }          
       }
     }
   }
@@ -78,7 +77,6 @@ function myFunction() {
     message.innerText = "Ваш ход,  " + currentPlayer;
     if (isWin === false && stepCount === 15) {
       message.innerText = "Ничья, предлагаем начать игру заново";
-      restart.addEventListener("click", resetDefault);
      } else {
       stepCount ++;
     }
@@ -95,8 +93,7 @@ function myFunction() {
           isWin = true;
           message.innerText = "Ура! Дарья победила!";         
           countScoreO++;
-          scoreO.innerText = countScoreO;
-          restart.addEventListener("click", resetDefault);          
+          scoreO.innerText = countScoreO;         
         } 
       }
     }
