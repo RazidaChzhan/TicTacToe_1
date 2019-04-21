@@ -1,38 +1,45 @@
-var button = document.querySelectorAll("button");
-var restart = document.getElementById('restart');
-var round = document.getElementById('round');
-var level = 1;
-var z = 0; //0 - cross 1 - zero
-var values = [];
-var currentPlayer = 'Полина';
-var winCombinations = [
-[0, 1, 2, 3],
-[4, 5, 6, 7],
-[8, 9, 10, 11],
-[12, 13, 14, 15],
-[0, 4, 8, 12],
-[1, 5, 9, 13],
-[2, 6, 10, 14],
-[3, 7, 11, 15],
-[0, 5, 10, 15],
-[3, 6, 9, 12]
-];
-var stepCount = 0,
-    isWin = false;
-var dataX = [], 
+var button = document.querySelectorAll("button"),
+    restart = document.getElementById('restart'),
+    round = document.getElementById('round'),
+    scoreX = document.getElementById('scoreX'),
+    scoreO = document.getElementById('scoreO'),
+    level = 1, 
+    z = 0,//0 - cross 1 - zero
+    currentPlayer = 'Полина',
+    countScoreX = 0,
+    countScoreO = 0,
+    stepCount = 0,
+    isWin = false,
+    winCombinations = [
+      [0, 1, 2, 3],
+      [4, 5, 6, 7],
+      [8, 9, 10, 11],
+      [12, 13, 14, 15],
+      [0, 4, 8, 12],
+      [1, 5, 9, 13],
+      [2, 6, 10, 14],
+      [3, 7, 11, 15],
+      [0, 5, 10, 15],
+      [3, 6, 9, 12]
+      ],
+    values = [],
+    dataX = [], 
     dataO = [];
+
+round.innerText = 'Уровень ' + level++;
+scoreX.innerText = countScoreX;
+scoreO.innerText = countScoreO;
 
 for (var i = 0; i < button.length; i++) {
     button[i].addEventListener("click", myFunction);
-  }
-  round.innerText = 'Уровень ' + level++;
+}
+
 function myFunction() {
   var num = +this.getAttribute("btn-num");
   
   if (isWin === true) {
     alert ('Игра закончилась, предлагаем начать игру заново.')
-    return;
-   
+    return;   
   }
 
   if (z === 0) {
@@ -40,7 +47,7 @@ function myFunction() {
       message.innerText = "Ваш ход, " +  currentPlayer;
     if (stepCount === 15) {
         message.innerText = "Ничья, предлагаем начать игру заново";
-       
+        restart.addEventListener("click", resetDefault);       
     } else {
       stepCount ++;
     }
@@ -55,12 +62,13 @@ function myFunction() {
       dataX.push(num);
       
       if (dataX.length > 3){
-        console.log ('checkWin: ' + checkWin(dataX, num));
-        if (checkWin(dataX, num)){
+         if (checkWin(dataX, num)){
           isWin = true;
           message.innerText = "Ура! Полина победила!";
+          countScoreX++;
+          scoreX.innerText = countScoreX;
           restart.addEventListener("click", resetDefault);
-        }
+        }          
       }
     }
   }
@@ -68,8 +76,9 @@ function myFunction() {
   else if (z === 1) {
     currentPlayer = 'Полина';
     message.innerText = "Ваш ход,  " + currentPlayer;
-    if (stepCount === 15) {
+    if (isWin === false && stepCount === 15) {
       message.innerText = "Ничья, предлагаем начать игру заново";
+      restart.addEventListener("click", resetDefault);
      } else {
       stepCount ++;
     }
@@ -83,8 +92,10 @@ function myFunction() {
       dataO.push(num);
       if (dataO.length > 3){
           if (checkWin(dataO, num)){
-          message.innerText = "Ура! Дарья победила!";
           isWin = true;
+          message.innerText = "Ура! Дарья победила!";         
+          countScoreO++;
+          scoreO.innerText = countScoreO;
           restart.addEventListener("click", resetDefault);          
         } 
       }
@@ -114,22 +125,20 @@ function resetDefault(){
   if (currentPlayer === 'Полина') {
     z = 0;
     message.innerText = "Ваш ход,  " + currentPlayer;
-   } else {
+    } else {
     z = 1;
     message.innerText = "Ваш ход,  " + currentPlayer;
-  }
+    }
   if (isWin === true) {
     round.innerText = 'Уровень ' + level++;
   }
-  
   dataX = []; 
   dataO = [];
   values = [];
   currentPlayer = 'Полина';
   isWin = false;
-  
+  stepCount = 0;
   for (var i = 0; i < button.length; i++) {
     button[i].style.backgroundImage = "url()";
   }
-  console.log ('dataX ' + dataX);
 }
