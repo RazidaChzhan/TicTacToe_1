@@ -1,4 +1,4 @@
-var button = document.querySelectorAll("button"),
+var button = document.querySelectorAll('button'),
     restart = document.getElementById('restart'),
     round = document.getElementById('round'),
     scoreX = document.getElementById('scoreX'),
@@ -25,10 +25,11 @@ var button = document.querySelectorAll("button"),
     values = [],
     dataX = [], 
     dataO = [];
-
+           
 round.innerText = 'Уровень ' + level++;
 scoreX.innerText = countScoreX;
 scoreO.innerText = countScoreO;
+
 
 for (var i = 0; i < button.length; i++) {
     button[i].addEventListener("click", myFunction);

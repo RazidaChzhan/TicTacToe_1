@@ -6,7 +6,7 @@
     <title>TicTacToe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-    </head>
+</head>
 <body>
     <header class="header" id=round>
         <img class="trophy_img" src="images/trophy.png" alt="картинка">
@@ -16,15 +16,17 @@
         <h1>Игроки:</h1>
         <h2 id=message>Ваш ход, Полина </h2>
             <div class="Player1">
+                <button id="dogBtn" class="color4">Выбери аватар</button>
                 <h1>Полина</h1>
-                <img class="cross" width="10%" src="images/cross.png" alt="картинка">   
-                <img class="Player1_img" width="25%" src="images/girl_1.png" alt="картинка">  
+                <img id="dogImg" class="cross" width="30%" src="" alt="картинка"></img>       
+                <img class="cross" width="10%" src="images/cross.png" alt="картинка"></img>                       
                 <h2 id=scoreX></h2>
             </div>      
                 <div class="Player2">
+                <button id="dogBtn" class="color4">Выбери аватар</button>
                 <h1>Дарья</h1>
-                <img class="Player2_img" width="25%"src="images/girl_2.png" alt="картинка">
-                <img class="zero" width="10%"src="images/zero.png" alt="картинка">
+                <img id="catImg" class="cross" width="30%" src="" alt="картинка"></img>
+                <img class="zero" width="10%"src="images/zero.png" alt="картинка"></img>                
                 <h2 id=scoreO></p>
             </div>
     </div>
@@ -69,4 +71,5 @@
     <footer class="footer"> Chzhan Razida, 2018 </footer>
 </body>
 <script src="script.js"></script>
+<script src="server.js"></script>
 </html> 
