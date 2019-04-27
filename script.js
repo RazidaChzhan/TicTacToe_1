@@ -1,4 +1,4 @@
-var button = document.querySelectorAll('button'),
+var button = document.getElementsByClassName('color'),
     restart = document.getElementById('restart'),
     round = document.getElementById('round'),
     scoreX = document.getElementById('scoreX'),
