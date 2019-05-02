@@ -6,13 +6,24 @@
     <title>TicTacToe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 </head>
 <body>
     <header class="header" id=round>
-        <img class="trophy_img" src="images/trophy.png" alt="картинка">
-       x
-    </header>        
-    <div class="Players_Menu">
+        <img class="trophy_img" src="images/trophy.png" alt="картинка">x
+    </header>  
+    <div class="header">
+        <button id="idRoom" class="color5">Получи номер комнаты</button>
+    </div>  
+            
+        <h3 class="header" id=roomId>Ваш номер комнаты:</h3>
+        
+        <div class="row">Введите номер комнаты: <input id="roomIdTxt" type="text" size="40"></div>
+        <div class="header">
+            <button  id="roomIdBtn" class="color5">Подключись к комнате</button>
+        </div>  
+        
+        <div class="Players_Menu">
         <h1>Игроки:</h1>
         <h2 id=message>Ваш ход, Полина </h2>
             <div class="Player1">
@@ -72,4 +83,5 @@
 </body>
 <script src="script.js"></script>
 <script src="server.js"></script>
+<script src="idRoom.js"></script>
 </html> 

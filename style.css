@@ -23,6 +23,17 @@ header {
     margin-left: 150px;
     border-radius: 20px; 
    }    
+   .websocket {
+    display: block;
+    width: 300px;
+    height: 35px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 24px;
+    margin-left: 550px;    
+    }
+    
 .trophy_img {
 width: 30px;
 height: 30px;
@@ -35,8 +46,8 @@ height: 30px;
     text-align: center;
     width: 450px;
     height: 230px;
-    margin-left: 90px;
-    margin-bottom: 40px;
+    margin-left: 390px;
+    margin-bottom: 10px;
 }
 .Player1 {
     display: block;
@@ -51,8 +62,8 @@ height: 30px;
     height: 110px;
         }
   .square {
-    margin-left: 100px;
-    width: 400px;
+    margin-left: 400px;
+    width: 450px;
     height: 400px;
     transform: skewY(<15>);  
 }
@@ -74,9 +85,9 @@ height: 30px;
     height: 30px;
     color: white;
     border-radius: 10px;
-    margin-left: 100px;
+    margin-left: 400px;
     border-radius: 10px;
-    margin-top: 0px;
+    margin-top: 10px;
 }
 .color4 {
     background-color: rgb(247, 220, 220);
@@ -85,15 +96,25 @@ height: 30px;
     border-radius: 10px;
     color: rgb(116, 59, 111);
 }
+.color5 {
+    background-color: rgb(247, 220, 220);
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    color: rgb(116, 59, 111);
+    margin-top: 20px;
+}
+
+
 footer {
     width: 380px;
     height: 20px;
     color: white;
     background-color: rgb(116, 59, 111);
-    margin-left: 100px;
+    margin-left: 400px;
     border-radius: 10px;
-    margin-top: 30px;
-    padding-top: 10px;
+    margin-top: 20px;
+    padding-top: 0px;
     padding-left: 10px;
     text-align: center;
     }
