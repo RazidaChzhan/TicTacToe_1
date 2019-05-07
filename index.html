@@ -12,6 +12,69 @@
     <header class="header" id=round>
         <img class="trophy_img" src="images/trophy.png" alt="картинка">x
     </header>  
+
+<div class="Field">
+    <div class="Players_Menu">
+        <h1>Игроки:</h1>
+        <h2 id=message>Ваш ход, Полина </h2>
+        <div class="Player1">
+            <button id="dogBtn" class="color4">Выбери аватар</button>
+            <h1>Полина</h1>
+            <img id="dogImg" class="cross" width="30%" src="" alt="картинка"></img>       
+            <img class="cross" width="10%" src="images/cross.png" alt="картинка"></img>                       
+            <h2 id=scoreX></h2>
+        </div>
+
+        <div class="Player2">
+            <button id="catBtn" class="color4">Выбери аватар</button>
+            <h1>Дарья</h1>
+            <img id="catImg" class="cross" width="30%" src="" alt="картинка"></img>
+            <img class="zero" width="10%"src="images/zero.png" alt="картинка"></img>                
+            <h2 id=scoreO></p>
+        </div>
+    </div>
+        
+        <main class="square">
+        <table>
+        <tr>
+            <td><button class="color color1" btn-num ="0"></button></td>
+            <td><button class="color color2" btn-num ="1"></button></td>
+            <td><button class="color color1" btn-num ="2"></button></td>
+            <td><button class="color color2" btn-num ="3"></button></td>
+        </tr>
+
+        <tr>
+            <td><button class="color color2" btn-num ="4"></button></td>
+            <td><button class="color color1" btn-num ="5"></button></td>
+            <td><button class="color color2" btn-num ="6"></button></td>
+            <td><button class="color color1" btn-num ="7"></button></td>
+        </tr>
+
+        <tr>
+            <td><button class="color color1" btn-num ="8"></button></td>
+            <td><button class="color color2" btn-num ="9"></button></td>
+            <td><button class="color color1" btn-num ="10"></button></td>
+            <td><button class="color color2" btn-num ="11"></button></td>
+         </tr> 
+
+        <tr>
+            <td><button class="color color2" btn-num ="12"></button></td>
+            <td><button class="color color1" btn-num ="13"></button></td>
+            <td><button class="color color2" btn-num ="14"></button></td>
+            <td><button class="color color1" btn-num ="15"></button></td>
+        </tr> 
+
+         </table>  
+         </main> 
+         <div>
+            <button class="color3" id=restart>Начать игру заново</button>
+        </div>
+        
+            <footer class="footer"> Chzhan Razida, 2018 </footer>
+
+    <div class="communication">
+    
+    
     <div class="header">
         <button id="idRoom" class="color5">Получи номер комнаты</button>
     </div>  
@@ -19,67 +82,17 @@
         <h3 class="header" id=roomId>Ваш номер комнаты:</h3>
         
         <div class="row">Введите номер комнаты: <input id="roomIdTxt" type="text" size="40"></div>
+
         <div class="header">
             <button  id="roomIdBtn" class="color5">Подключись к комнате</button>
         </div>  
-        
-        <div class="Players_Menu">
-        <h1>Игроки:</h1>
-        <h2 id=message>Ваш ход, Полина </h2>
-            <div class="Player1">
-                <button id="dogBtn" class="color4">Выбери аватар</button>
-                <h1>Полина</h1>
-                <img id="dogImg" class="cross" width="30%" src="" alt="картинка"></img>       
-                <img class="cross" width="10%" src="images/cross.png" alt="картинка"></img>                       
-                <h2 id=scoreX></h2>
-            </div>      
-                <div class="Player2">
-                <button id="catBtn" class="color4">Выбери аватар</button>
-                <h1>Дарья</h1>
-                <img id="catImg" class="cross" width="30%" src="" alt="картинка"></img>
-                <img class="zero" width="10%"src="images/zero.png" alt="картинка"></img>                
-                <h2 id=scoreO></p>
-            </div>
+
+        <h3 class="header" id="messageId">Полученные сообщения: </h3>
+        <div class="row">Ваше сообщение: <input id="messageIdTxt" type="text" size="45"></div>
+        <div class="header">
+            <button  id="messageIdBtn" class="color5">Отправь сообщение</button>
+        </div> 
     </div>
-    
-              
-    <main class="square">
-        <table>
-               <tr>
-                    <td><button class="color color1" btn-num ="0"></button></td>
-                    <td><button class="color color2" btn-num ="1"></button></td>
-                    <td><button class="color color1" btn-num ="2"></button></td>
-                    <td><button class="color color2" btn-num ="3"></button></td>
-               </tr>
-
-               <tr>
-                <td><button class="color color2" btn-num ="4"></button></td>
-                <td><button class="color color1" btn-num ="5"></button></td>
-                <td><button class="color color2" btn-num ="6"></button></td>
-                <td><button class="color color1" btn-num ="7"></button></td>
-               </tr>
-
-               <tr>
-                <td><button class="color color1" btn-num ="8"></button></td>
-                <td><button class="color color2" btn-num ="9"></button></td>
-                <td><button class="color color1" btn-num ="10"></button></td>
-                <td><button class="color color2" btn-num ="11"></button></td>
-               </tr> 
-
-               <tr>
-                <td><button class="color color2" btn-num ="12"></button></td>
-                <td><button class="color color1" btn-num ="13"></button></td>
-                <td><button class="color color2" btn-num ="14"></button></td>
-                <td><button class="color color1" btn-num ="15"></button></td>
-               </tr> 
-
-        </table>  
- 
-    </main>    
-    <div>
-        <button class="color3" id=restart>Начать игру заново</button>
-    </div>
-    <footer class="footer"> Chzhan Razida, 2018 </footer>
 </body>
 <script src="script.js"></script>
 <script src="server.js"></script>
