@@ -5,10 +5,13 @@ var roomId,
 	dataUpDateField, 
 	dataSwitchCurrentPlayer, 
 	dataGameStart,
+	dataNewMessage,
 	socket = io('ws://localhost:3001');
 
+var currentRoomId;
+
 var idRoomBtn = document.getElementById('idRoom');
-var idRoomMsg = document.getElementById('message');
+var idRoomMsg = document.getElementById('roomId');
 var idRoomTxt = document.getElementById('roomIdTxt');
 var idRoomBtnToServer = document.getElementById('roomIdBtn');
 var idRoomBtn = document.getElementById('idRoom');
@@ -43,13 +46,17 @@ socket.on ('action', (data) => {
 		case 'gameStart': dataGameStart = data;
 		console.log('server data dataGameStart', dataGameStart);
 		break;
+		case 'newMessage': dataNewMessage = data;
+		console.log ('server data dataNewMessage', dataNewMessage);
+		printMessage();
+		break;
 	}	
 });
 
 	// Listeners
 idRoomBtn.addEventListener("click", getRoomId);
 idRoomBtnToServer.addEventListener("click", connectToRoom);
-messageBtn.addEventListener("click", messageToRoom);
+messageBtn.addEventListener("click", sendMessageToRoom);
 
 
 // Functions
@@ -71,16 +78,21 @@ function connectToRoom () {
 	});
 }
 
-function messageToRoom () {
-	//var message = messageTxt.value;
-	roomId = dataRoomInit.data.id;
-	console.log('Send message');
-	console.log('Send.message.roomid', roomId);
+function printMessage () {
+	console.log ('Message', dataNewMessage.data.message);
+	receiveвMsg.innerText = "Полученные сообщения: " + dataNewMessage.data.message;
+}
+
+function sendMessageToRoom () {
+	var currentMessageTxt = messageTxt.value;	
+	currentRoomId = dataGameStart.data.id;
+	console.log('Send.message.roomid', currentRoomId);
+	console.log('Send.message.currentMessageTxt', currentMessageTxt);
 	socket.emit('action', {       
 		type: 'message',
 		data: {
-			roomId: roomId,
-			message: 'Tic-Tac-Toe',
+			roomId: currentRoomId,
+			message: currentMessageTxt,
 			cb: function(data) {
 				console.log(data);
 			}
