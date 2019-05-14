@@ -46,6 +46,9 @@ socket.on ('action', (data) => {
 		break;
 		case 'gameStart': dataGameStart = data;
 		console.log('server data dataGameStart', dataGameStart);
+		if (idRoomTxt.value === dataGameStart.data.id) {
+			alert ('Ура! Вы подключились к комнате, можно начинать игру.')
+		}
 		break;
 		case 'newMessage': dataNewMessage = data;
 		console.log ('server data dataNewMessage', dataNewMessage);
@@ -77,7 +80,6 @@ function connectToRoom () {
 			}
 		}	
 	});
-	alert ('Вы подключились к игре!');
 }
 
 function printMessage () {
