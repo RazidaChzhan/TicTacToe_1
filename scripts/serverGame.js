@@ -26,7 +26,7 @@ var fields;
 var currentStepTxt = document.getElementById('message');
 var currentStepBtn = document.getElementsByClassName('color');
 
-
+var button = document.getElementsByClassName('color');
 //Controller
 
 if (socket != null){
@@ -44,12 +44,9 @@ socket.on ('action', (data) => {
 		console.log('server data dataGameInfo', dataGameInfo);
 		break;
 		case 'updateField': dataUpDateField = data;
-		fields = dataUpDateField.data;
-		console.log('server data dataUpdateField', dataUpDateField);
-		console.log('field_0', fields[0]);
-		console.log('field_1', fields[1]);
-		console.log('field_2', fields[2]);
-		console.log('field_3', fields[3]);
+			console.log('server data dataUpdateField', dataUpDateField);
+			fields = dataUpDateField.data;
+			updateGameField (fields);
 		break;
 		case 'switchCurrentPlayer': dataSwitchCurrentPlayer = data;
 		console.log('server data dataSwitchCurrentPlayer', dataSwitchCurrentPlayer);
@@ -72,7 +69,6 @@ socket.on ('action', (data) => {
 idRoomBtn.addEventListener("click", getRoomId);
 idRoomBtnToServer.addEventListener("click", connectToRoom);
 messageBtn.addEventListener("click", sendMessageToRoom);
-//currentStepBtn.addEventListener("click", doStep);
 
 for (var i = 0; i < button.length; i++) {
     button[i].addEventListener("click", doStep);
@@ -105,9 +101,6 @@ function printMessage () {
 
 function sendMessageToRoom () {
 	var currentMessageTxt = messageTxt.value;	
-	//currentRoomId = dataGameStart.data.id;
-	console.log('Send.message.roomid', currentRoomId);
-	console.log('Send.message.currentMessageTxt', currentMessageTxt);
 	socket.emit('action', {       
 		type: 'message',
 		data: {
@@ -121,11 +114,10 @@ function sendMessageToRoom () {
 }
 
 function doStep () {
-	console.log(`roomId: ${currentRoomId}`);
+	var num = +this.getAttribute("btn-num"),
+		fieldRow, 
+		fieldCell;
 
-	var num = +this.getAttribute("btn-num");
-	console.log('btnNum', num);	
-	var fieldRow, fieldCell;
 	switch (num) {
 		case 0: fieldRow = 0; fieldCell = 0; break;
 		case 1: fieldRow = 0; fieldCell = 1; break;
@@ -144,10 +136,7 @@ function doStep () {
 		case 14: fieldRow = 3; fieldCell = 2; break;
 		case 15: fieldRow = 3; fieldCell = 3; break;
 	}
-	if(num==0){
-		
-	}
-	console.log (`row: ${fieldRow} cell: ${fieldCell}`);
+
 	socket.emit('action', {       
 		type: 'doStep',
 		data: {
@@ -159,4 +148,51 @@ function doStep () {
 			}
 		}
 	});
+}
+
+function updateGameField (gameField) {
+	var cellValue;
+	console.log ('gameFields: ', gameField);
+	for (var row = 0; row < gameField.length; row++){
+		for(var cell = 0; cell < gameField[row].length; cell++){
+			cellValue = gameField[row][cell].val;
+
+			if (cellValue === 'x'){
+				var btnId = getBtnIdByRowAndCell(row, cell);
+				console.log (`row: ${row} cell: ${cell} btnId: ${btnId} val: ${cellValue}`);
+				
+				// TODO set picture X
+			}
+
+			if (cellValue === 'o') {
+				var btnId = getBtnIdByRowAndCell(row, cell);
+				console.log (`row: ${row} cell: ${cell} btnId: ${btnId} val: ${cellValue}`);
+				
+				// TODO set picture O
+			}
+
+		
+		}
+	}
+}
+
+function getBtnIdByRowAndCell(row, cell) {
+	switch (true) {
+		case row === 0 && cell === 0: return 0;
+		case row === 0 && cell === 1: return 1;
+		case row === 0 && cell === 2: return 2;
+		case row === 0 && cell === 3: return 3;
+		case row === 1 && cell === 0: return 4;
+		case row === 1 && cell === 1: return 5;
+		case row === 1 && cell === 2: return 6;
+		case row === 1 && cell === 3: return 7;
+		case row === 2 && cell === 0: return 8;
+		case row === 2 && cell === 1: return 9;
+		case row === 2 && cell === 2: return 10;
+		case row === 2 && cell === 3: return 11;
+		case row === 3 && cell === 0: return 12;
+		case row === 3 && cell === 1: return 13;
+		case row === 3 && cell === 2: return 14;
+		case row === 3 && cell === 3: return 15;
+	}
 }
