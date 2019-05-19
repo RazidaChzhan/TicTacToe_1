@@ -9,7 +9,11 @@ var roomId,
 	socket = io('ws://localhost:3001');
 
 var currentRoomId;
-var currentStep;
+var player1, 
+	player2, 
+	currentPlayer,
+	currentPlayerId,
+	fields;
 
 var idRoomBtn = document.getElementById('idRoom');
 var idRoomMsg = document.getElementById('roomId');
@@ -22,11 +26,8 @@ var messageTxt = document.getElementById('messageIdTxt');
 var messageBtn = document.getElementById('messageIdBtn');
 var allMessage = '';
 
-var fields;
-var currentStepTxt = document.getElementById('message');
-var currentStepBtn = document.getElementsByClassName('color');
-
 var button = document.getElementsByClassName('color');
+var currentPlayerName = document.getElementById ("message");
 //Controller
 
 if (socket != null){
@@ -40,24 +41,42 @@ socket.on ('action', (data) => {
 		case 'roomInit': dataRoomInit = data;
 		console.log('server data dataRoomInit', dataRoomInit);
 		break;
+		
 		case 'gameInfo': dataGameInfo = data;
 		console.log('server data dataGameInfo', dataGameInfo);
 		break;
+		
 		case 'updateField': dataUpDateField = data;
 			console.log('server data dataUpdateField', dataUpDateField);
 			fields = dataUpDateField.data;
 			updateGameField (fields);
 		break;
+				
 		case 'switchCurrentPlayer': dataSwitchCurrentPlayer = data;
-		console.log('server data dataSwitchCurrentPlayer', dataSwitchCurrentPlayer);
+			console.log('server data dataSwitchCurrentPlayer', dataSwitchCurrentPlayer);
+			currentPlayerId = dataSwitchCurrentPlayer.data.currentPlayer;
+			switchCurrentPlayer(currentPlayerId);
 		break;
+
+
 		case 'gameStart': dataGameStart = data;
 			console.log('server data dataGameStart', dataGameStart);
+			
+			player1 = dataGameStart.data.client;
+			player2 = dataGameStart.data.host;
+
+			// console.log ('Player1:', player1);
+			// console.log ('Player2:', player2);
+			
+			printPlayersName (player1, player2); // вывод имен игроков на экране
+			
 			if (idRoomTxt.value === dataGameStart.data.id) {
 				alert ('Ура! Вы подключились к комнате, можно начинать игру.')
 			}
 			currentRoomId = dataGameStart.data.id;
 		break;
+
+		
 		case 'newMessage': dataNewMessage = data;
 		console.log ('server data dataNewMessage', dataNewMessage);
 		printMessage();
@@ -98,6 +117,9 @@ function printMessage () {
 	allMessage = allMessage + dataNewMessage.data.name + ': ' + dataNewMessage.data.message + '\n';
 	receiveвMsg.innerText = "Полученные сообщения: \n" + allMessage;
 }
+
+
+
 
 function sendMessageToRoom () {
 	var currentMessageTxt = messageTxt.value;	
@@ -159,19 +181,25 @@ function updateGameField (gameField) {
 
 			if (cellValue === 'x'){
 				var btnId = getBtnIdByRowAndCell(row, cell);
-				console.log (`row: ${row} cell: ${cell} btnId: ${btnId} val: ${cellValue}`);
+				// console.log (`row: ${row} cell: ${cell} btnId: ${btnId} val: ${cellValue}`);
 				
 				// TODO set picture X
-			}
+				var btn = document.getElementById(btnId);
+				// console.log ('btn', btn);
+				btn.style.backgroundImage = "url(images/cross.png)";
+      			btn.style.backgroundSize ="cover";
+			 }
 
 			if (cellValue === 'o') {
 				var btnId = getBtnIdByRowAndCell(row, cell);
-				console.log (`row: ${row} cell: ${cell} btnId: ${btnId} val: ${cellValue}`);
+				// console.log (`row: ${row} cell: ${cell} btnId: ${btnId} val: ${cellValue}`);
 				
 				// TODO set picture O
+				var btn = document.getElementById(btnId);
+				btn.style.backgroundImage = "url(images/zero.png)";
+      			btn.style.backgroundSize ="cover";
 			}
-
-		
+	
 		}
 	}
 }
@@ -194,5 +222,36 @@ function getBtnIdByRowAndCell(row, cell) {
 		case row === 3 && cell === 1: return 13;
 		case row === 3 && cell === 2: return 14;
 		case row === 3 && cell === 3: return 15;
+	}
+}
+
+function printPlayersName (player1, player2) {
+	var player1Name = document.getElementById("Player1");
+	var player2Name = document.getElementById('Player2');
+	
+	player1Name.innerText = player1.name;
+	player2Name.innerText = player2.name;
+
+	if(player1.marker === 'x'){
+		currentPlayer = player1;
+	} else {
+		currentPlayer = player2;
+	}
+	currentPlayerName.innerText = "Ваш ход, " + currentPlayer.name;
+}
+
+function switchCurrentPlayer (currentPlayerId) {
+	
+	var name;
+	
+	if(typeof player1 !== 'undefined' && typeof player2 !== 'undefined') {
+		
+		if (currentPlayerId != null && currentPlayerId === player1.id) {
+			name = player1.name;
+		} else {
+			name = player2.name;
+		}	
+		
+		currentPlayerName.innerText = "Ваш ход, " + name;
 	}
 }
