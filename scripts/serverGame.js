@@ -18,9 +18,9 @@ var player1,
 	currentPlayerId,
 	fields,
 	name,
-	scoreO,
-	scoreX,
-	round;
+	scorePlayer1 = 0,
+	scorePlayer2 = 0,
+	roundNumber = 1;
 
 var idRoomBtn = document.getElementById('idRoom');
 var idRoomMsg = document.getElementById('roomId');
@@ -41,6 +41,8 @@ var gameOverMsg = document.getElementById ("message");
 var newGameBtn = document.getElementById("restart");
 var roundMsg = document.getElementById('round');
 
+var scorePlayer1Msg = document.getElementById('scorePlayer1');
+var scorePlayer2Msg = document.getElementById('scorePlayer2');
 //Controller
 
 if (socket != null){
@@ -53,6 +55,7 @@ socket.on ('action', (data) => {
 		switch(data.type){
 		case 'roomInit': dataRoomInit = data;
 		console.log('server data dataRoomInit', dataRoomInit);
+		printRoundNumber ();
 		break;
 		
 		case 'gameInfo': dataGameInfo = data;
@@ -97,8 +100,9 @@ socket.on ('action', (data) => {
 
 		case 'gameOver': dataGameOver = data;
 		console.log ('server data dataGameOver', dataGameOver);
-		printGameOver ();
-		printScore ();
+		
+		currentGameOver();
+
 		break;
 		
 		case 'roomDestroy': dataRoomDestroy = data;
@@ -284,29 +288,17 @@ function switchCurrentPlayer (currentPlayerId) {
 	}
 }
 
-function printGameOver() {
- 	console.log ('gameOver', dataGameOver.data);
- 	gameOverMsg.innerText = "Игра закончилась, предлагаем начать игру заново. Победил игрок: " + name;
-}
 
-function printScore () {
-	if (player1.name === dataGameOver.data.winnerId) {
-		scoreX +=1;
-		
-	}
-}
+
+
 
 function startNewGame(){
 	newGame();
-	console.log('fields ', fields);
 	updateGameField(fields);
 }
 
 function newGame () {
-	console.log ('newGameBtn click');
-	console.log ('roomId ', roomId);
-	console.log ('currentRoomId', currentRoomId);
-
+	
 	socket.emit('action', {       
 		type: 'newGame',
 		data: {
@@ -316,4 +308,52 @@ function newGame () {
 			}
 		}	
 	});
+}
+
+function currentGameOver(){
+	// 1. Печатаем, что игра закончилась
+	printGameOver ();
+
+	// 2. Посчет очков
+	countScore();
+
+	// 3. Печатаем счёт очков
+	printScore ();
+
+	// 4. Печатаем номер уровня
+	printRoundNumber ();
+}
+
+
+function printGameOver() {
+	console.log ('gameOver', dataGameOver.data);
+	gameOverMsg.innerText = "Игра закончилась, предлагаем начать игру заново. Победил игрок: " + name;
+}
+
+function countScore(){
+	console.log('Player 1: ', player1);
+	console.log('Player 2: ', player2);
+
+	if(player1.id === dataGameOver.data.winnerId){
+		scorePlayer1++;
+	}
+
+	if(player2.id === dataGameOver.data.winnerId){
+		scorePlayer2++;
+	}
+
+	roundNumber++;
+}
+
+
+function printScore () {
+	console.log('scorePlayer1:', scorePlayer1);
+	console.log('scorePlayer2:', scorePlayer2);
+	scorePlayer1Msg.innerText = scorePlayer1;
+	scorePlayer2Msg.innerText = scorePlayer2;
+
+}
+function printRoundNumber () {
+roundMsg.innerText = "Уровень " + roundNumber;
+
 }
