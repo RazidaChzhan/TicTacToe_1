@@ -1,11 +1,14 @@
 // Model
-var roomId,
+var room, 
+	roomId,
 	dataRoomInit,
 	dataGameInfo, 
 	dataUpDateField, 
 	dataSwitchCurrentPlayer, 
 	dataGameStart,
 	dataNewMessage,
+	dataGameOver,
+	dataRoomDestroy,
 	socket = io('ws://localhost:3001');
 
 var currentRoomId;
@@ -13,13 +16,18 @@ var player1,
 	player2, 
 	currentPlayer,
 	currentPlayerId,
-	fields;
+	fields,
+	name,
+	scoreO,
+	scoreX,
+	round;
 
 var idRoomBtn = document.getElementById('idRoom');
 var idRoomMsg = document.getElementById('roomId');
 var idRoomTxt = document.getElementById('roomIdTxt');
 var idRoomBtnToServer = document.getElementById('roomIdBtn');
 var idRoomBtn = document.getElementById('idRoom');
+var newGameBtn = document.getElementById('restart');
 
 var receiveвMsg = document.getElementById('messageId');
 var messageTxt = document.getElementById('messageIdTxt');
@@ -28,6 +36,11 @@ var allMessage = '';
 
 var button = document.getElementsByClassName('color');
 var currentPlayerName = document.getElementById ("message");
+
+var gameOverMsg = document.getElementById ("message");
+var newGameBtn = document.getElementById("restart");
+var roundMsg = document.getElementById('round');
+
 //Controller
 
 if (socket != null){
@@ -81,13 +94,24 @@ socket.on ('action', (data) => {
 		console.log ('server data dataNewMessage', dataNewMessage);
 		printMessage();
 		break;
-	}	
+
+		case 'gameOver': dataGameOver = data;
+		console.log ('server data dataGameOver', dataGameOver);
+		printGameOver ();
+		printScore ();
+		break;
+		
+		case 'roomDestroy': dataRoomDestroy = data;
+		console.log ('server data dataRoomDestroy', dataRoomDestroy);
+		break;
+		}	
 });
 
 	// Listeners
 idRoomBtn.addEventListener("click", getRoomId);
 idRoomBtnToServer.addEventListener("click", connectToRoom);
 messageBtn.addEventListener("click", sendMessageToRoom);
+newGameBtn.addEventListener("click", startNewGame);
 
 for (var i = 0; i < button.length; i++) {
     button[i].addEventListener("click", doStep);
@@ -100,7 +124,7 @@ function getRoomId () {
 }
 
 function connectToRoom () {
-	var room = idRoomTxt.value;
+	room = idRoomTxt.value;
 	socket.emit('action', {       
 		type: 'connectToRoom',
 		data: {
@@ -117,9 +141,6 @@ function printMessage () {
 	allMessage = allMessage + dataNewMessage.data.name + ': ' + dataNewMessage.data.message + '\n';
 	receiveвMsg.innerText = "Полученные сообщения: \n" + allMessage;
 }
-
-
-
 
 function sendMessageToRoom () {
 	var currentMessageTxt = messageTxt.value;	
@@ -199,6 +220,15 @@ function updateGameField (gameField) {
 				btn.style.backgroundImage = "url(images/zero.png)";
       			btn.style.backgroundSize ="cover";
 			}
+
+			if(cellValue === "_"){
+				var btnId = getBtnIdByRowAndCell(row, cell);
+				// console.log (`row: ${row} cell: ${cell} btnId: ${btnId} val: ${cellValue}`);
+				
+				// TODO set picture O
+				var btn = document.getElementById(btnId);
+				btn.style.backgroundImage = "url()";
+			}
 	
 		}
 	}
@@ -241,9 +271,7 @@ function printPlayersName (player1, player2) {
 }
 
 function switchCurrentPlayer (currentPlayerId) {
-	
-	var name;
-	
+		
 	if(typeof player1 !== 'undefined' && typeof player2 !== 'undefined') {
 		
 		if (currentPlayerId != null && currentPlayerId === player1.id) {
@@ -254,4 +282,38 @@ function switchCurrentPlayer (currentPlayerId) {
 		
 		currentPlayerName.innerText = "Ваш ход, " + name;
 	}
+}
+
+function printGameOver() {
+ 	console.log ('gameOver', dataGameOver.data);
+ 	gameOverMsg.innerText = "Игра закончилась, предлагаем начать игру заново. Победил игрок: " + name;
+}
+
+function printScore () {
+	if (player1.name === dataGameOver.data.winnerId) {
+		scoreX +=1;
+		
+	}
+}
+
+function startNewGame(){
+	newGame();
+	console.log('fields ', fields);
+	updateGameField(fields);
+}
+
+function newGame () {
+	console.log ('newGameBtn click');
+	console.log ('roomId ', roomId);
+	console.log ('currentRoomId', currentRoomId);
+
+	socket.emit('action', {       
+		type: 'newGame',
+		data: {
+			roomId: currentRoomId,
+			cb: function(data) {
+				console.log(data);
+			}
+		}	
+	});
 }
